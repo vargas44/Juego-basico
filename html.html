@@ -39,14 +39,21 @@ var lives = 10;
 
 var bricks = [];
 var colbricks = [];
+var colorAleatorio=true;
 for(c=0; c<brickColumnCount; c++) {
     bricks[c] = [];
     colbricks[c] = [];
     for(r=0; r<brickRowCount; r++) {
         bricks[c][r] = { x: 0, y: 0, status: 1 };
-        var red=80+10*r;//getRandomInt(0,255);
-        var green=50+18*c;//getRandomInt(0,255);
-        var blue=90+10*r;//getRandomInt(0,255);
+        if (colorAleatorio) {
+            var red=100+25*r;   //o getRandomInt(0,255);
+            var green=50+5*c;   //o getRandomInt(0,255);
+            var blue=0+10*r;    //o getRandomInt(0,255);            
+        }else{
+            var red=getRandomInt(0,255);
+            var green=getRandomInt(0,255);
+            var blue=getRandomInt(0,255);            
+        }
         colbricks[c][r] = "rgb("+red+", "+green+", "+blue+")";
     }
 }
@@ -116,13 +123,10 @@ function drawBricks() {
             if(bricks[c][r].status == 1) {
                 var brickX = (r*(brickWidth+brickPadding))+brickOffsetLeft;
                 var brickY = (c*(brickHeight+brickPadding))+brickOffsetTop;                
-                
-                var brickCol = (c*(brickHeight+brickPadding))+brickOffsetTop;
                 bricks[c][r].x = brickX;
                 bricks[c][r].y = brickY;
                 ctx.beginPath();
                 ctx.rect(brickX, brickY, brickWidth, brickHeight);
-                //ctx.fillStyle = "rgb("+r+", "+g+", "+b+")";
                 ctx.fillStyle = colbricks[c][r];
                 //ctx.fillStyle = "#ff95DD";
                 ctx.fill();
