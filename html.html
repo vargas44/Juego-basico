@@ -38,10 +38,16 @@ var score = 0;
 var lives = 10;
 
 var bricks = [];
+var colbricks = [];
 for(c=0; c<brickColumnCount; c++) {
     bricks[c] = [];
+    colbricks[c] = [];
     for(r=0; r<brickRowCount; r++) {
         bricks[c][r] = { x: 0, y: 0, status: 1 };
+        var red=80+10*r;//getRandomInt(0,255);
+        var green=50+18*c;//getRandomInt(0,255);
+        var blue=90+10*r;//getRandomInt(0,255);
+        colbricks[c][r] = "rgb("+red+", "+green+", "+blue+")";
     }
 }
 
@@ -109,17 +115,24 @@ function drawBricks() {
         for(r=0; r<brickRowCount; r++) {
             if(bricks[c][r].status == 1) {
                 var brickX = (r*(brickWidth+brickPadding))+brickOffsetLeft;
-                var brickY = (c*(brickHeight+brickPadding))+brickOffsetTop;
+                var brickY = (c*(brickHeight+brickPadding))+brickOffsetTop;                
+                
+                var brickCol = (c*(brickHeight+brickPadding))+brickOffsetTop;
                 bricks[c][r].x = brickX;
                 bricks[c][r].y = brickY;
                 ctx.beginPath();
                 ctx.rect(brickX, brickY, brickWidth, brickHeight);
-                ctx.fillStyle = "#0095DD";
+                //ctx.fillStyle = "rgb("+r+", "+g+", "+b+")";
+                ctx.fillStyle = colbricks[c][r];
+                //ctx.fillStyle = "#ff95DD";
                 ctx.fill();
                 ctx.closePath();
             }
         }
     }
+}
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
 }
 function drawScore() {
     ctx.font = "16px Arial";
